@@ -13,7 +13,7 @@ These SDKs let you use [Parse](https://www.parse.com/) for building Internet of 
 * Send [push notifications](https://www.parse.com/products/push) to your connected devices.
 
 * Securely access your app's data from connected devices.
-    * All communication between your connected device's Embedded SDK and the Parse Cloud, including push notifications, is protected by SSL encryption.
+    * All communication between your connected device's Arduino SDK and the Parse Cloud, including push notifications, is protected by SSL encryption.
     * You can protect user data with [Access Control Lists (ACLs)](https://www.parse.com/docs/data#security-objects) so it can only be accessed with that user's session token.
 
 * Perform complex application logic in [Parse Cloud Code](https://www.parse.com/docs/cloud_code_guide), so you can minimize the memory footprint of your app on your connected device.

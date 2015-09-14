@@ -1,4 +1,4 @@
-# Contributing to Parse Embedded SDKs
+# Contributing to Parse Arduino SDK
 We want to make contributing to this project as easy and transparent as possible.
 
 ## Pull Requests
