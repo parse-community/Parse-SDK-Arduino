@@ -1,7 +1,7 @@
 #include <Bridge.h>
 
-String revision = "1.0.1-1_ar71xx";
-String location = "https://raw.githubusercontent.com/ParsePlatform/parse-embedded-sdks/master/yun/linux_package/";
+String revision = "1.0.2-1_ar71xx";
+String location = "https://raw.githubusercontent.com/ParsePlatform/parse-embedded-sdks/1.0.2/yun/linux_package/";
 
 void downloadPackage(String file) {
   Serial.println("Download: " + location + file + revision + ".ipk");
@@ -17,7 +17,7 @@ void downloadPackage(String file) {
   p.addParameter("/tmp/" + file + revision + ".ipk");
   p.addParameter(location + file + revision + ".ipk");
   p.run();
-  while (p.available()) { 
+  while (p.available()) {
     Serial.print((char)p.read());
   }
 }
@@ -39,16 +39,16 @@ void installPackage(String file) {
 void setup() {
   Bridge.begin();
   Serial.begin(115200);
-  
+
   while(!Serial);
-  
+
   Serial.println("Downloading packages");
   downloadPackage("parse-embedded_");
   downloadPackage("parse-embedded-yun_");
   Serial.println("Installing packages");
   installPackage("parse-embedded_");
   installPackage("parse-embedded-yun_");
-    
+
   Serial.println("\nDone.");
 }
 
