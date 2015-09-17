@@ -19,6 +19,7 @@
  *
  */
 
+#include "ParseInternal.h"
 #include "ParseClient.h"
 #include "ParseObjectDelete.h"
 

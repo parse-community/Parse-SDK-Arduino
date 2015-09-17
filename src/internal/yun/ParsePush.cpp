@@ -19,13 +19,19 @@
  *
  */
 
-#include "ParseInternal.h"
-#include "ParseClient.h"
-#include "ParseObjectGet.h"
+#ifdef ARDUINO_AVR_YUN
 
-ParseObjectGet::ParseObjectGet() : ParseRequest() {
+#include "../ParseClient.h"
+#include "../ParsePush.h"
+
+ParsePush::ParsePush(Process* pushClient) : ParseResponse(pushClient) {
 }
 
-ParseResponse ParseObjectGet::send() {
-	return Parse.sendRequest("GET", httpPath, "", "");
+void ParsePush::close() {
+  // send signal to linux that the push is consumed.
+  // iterate into next push
+  client->write('n');
+  freeBuffer();
 }
+
+#endif

@@ -44,7 +44,7 @@ public:
    *
    *  \result the response
    */
-  ParseResponse send() override;
+  ParseResponse send();
 };
 
 #endif

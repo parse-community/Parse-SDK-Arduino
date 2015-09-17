@@ -19,7 +19,7 @@
  *
  */
 
-#include "ParseClient.h"
+#include "ParseInternal.h"
 #include "ParseRequest.h"
 
 ParseRequest::ParseRequest() {
