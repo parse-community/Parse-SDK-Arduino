@@ -57,8 +57,8 @@ void objectDataTypesTest() {
   ParseObjectCreate create;
   create.setClassName("TestObject");
   create.addGeoPoint("location", 40.0, -30.0);
-  create.addJSONValue("dateField", "{ \"__type\": \"Date\", \"iso\": \"2011-08-21T18:02:52.249Z\" }");
-  create.addJSONValue("arrayField", "[ 30, \"s\" ]");
+  create.addJSONValue("dateField", "{\"__type\":\"Date\",\"iso\":\"2011-08-21T18:02:52.249Z\"}");
+  create.addJSONValue("arrayField", "[30,\"s\"]");
   create.addJSONValue("emptyField", "null");
   ParseResponse createResponse = create.send();
   assert(createResponse.getErrorCode() == 0);
