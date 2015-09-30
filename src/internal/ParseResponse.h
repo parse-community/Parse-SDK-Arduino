@@ -22,7 +22,7 @@
 #ifndef ParseResponse_h
 #define ParseResponse_h
 
-#include <Process.h>
+#include "ConnectionClient.h"
 
 /*! \file ParseResponse.h
  *  \brief ParseResponse object for the Yun
@@ -40,14 +40,35 @@ protected:
   char* buf;
   char* tmpBuf;
   bool isUserBuffer;
-  int p = 0;
-  int resultCount = -1;
-  Process* client;
-  void read();
+  int p;
+  int resultCount;
+#if defined (ARDUINO_SAMD_ZERO)
+  long responseLength;
+  bool isChunked;
+  bool firstObject;
+  bool dataDone;
+  char chunkedBuffer[1024];
+  int bufferPos;
+  int lastRead;
+#endif
+  ConnectionClient* client;
+
+  virtual void read();
   void readWithTimeout(int maxSec);
+
+#if defined (ARDUINO_SAMD_ZERO)
+  // Zero functions only - do nothing on Yun
+  void readLine(char *buff, int sz);
+  bool readJson(char *buff, int sz);
+  bool readJsonInternal(char *buff, int sz, int *read_bytes, char started);
+  int readChunkedData(int timeout);
+  // End Zero only functions
+#endif
+
   int available();
   void freeBuffer();
-  ParseResponse(Process* client);
+
+  ParseResponse(ConnectionClient* client);
 
 public:
   /*! \fn ParseResponse()
@@ -126,6 +147,10 @@ public:
    *
    *  NOTE: if the query resutls exceed 2048 bytes(query result buffer size),
    *        it will only return the count of objects in the buffer.
+   *  NOTE2(Zero only): the returned count is approximation of the number of
+   *        returned objects. If the server sends results multi-chunked, the
+   *        count is an approximation of the objects in the first chunk
+   *        (usually 4K-16K)
    *  \result number of objects in the result
    */
   int count();

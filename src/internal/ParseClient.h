@@ -22,11 +22,11 @@
 #ifndef ParseClient_h
 #define ParseClient_h
 
-#if defined (ARDUINO_AVR_YUN) || defined (ARDUINO_AVR_TRE)
+//#if defined (ARDUINO_AVR_YUN) || defined (ARDUINO_AVR_TRE)
 
+#include "ConnectionClient.h"
 #include "ParseResponse.h"
 #include "ParsePush.h"
-#include <Process.h>
 
 /*! \file ParseClient.h
  *  \brief ParseClient object for the Yun
@@ -35,17 +35,30 @@
 
 /*! \class ParseClient
  *  \brief Class responsible for Parse connection
- *
- *  NOTE: A global ParseClient object with the name "Parse" is defined in the SDK,
- *  use it in your sketch instead of defining your own ParseClient object.
  */
 class ParseClient {
 private:
-  const char* installationId;
-  const char* sessionToken;
-  void read(Process* client, char* buf, int size);
-  Process pushClient;
-  Process requestClient;
+  char applicationId[41]; // APPLICATION_ID_MAX_LEN
+  char clientKey[41]; // CLIENT_KEY_MAX_LEN
+  char installationId[37]; // INSTALLATION_ID_MAX_LEN
+  char sessionToken[41]; // SESSION_TOKEN_MAX_LEN
+
+  ConnectionClient client;
+  ConnectionClient pushClient;
+
+  unsigned long lastHeartbeat;
+
+  void read(ConnectionClient* client, char* buf, int len);
+
+#if defined (ARDUINO_SAMD_ZERO)
+  char lastPushTime[41]; // PUSH_TIME_MAX_LEN
+  bool dataIsDirty;
+  char pushBuff[5];
+
+  void saveKeys();
+  void restoreKeys();
+  void saveLastPushTime(char *time);
+#endif
 
 public:
   /*! \fn ParseClient()
@@ -56,6 +69,7 @@ public:
    *  \brief Destructor of ParseClient object
    */
   ~ParseClient();
+
 
   /*! \fn begin(const char *applicationId, const char *clientKey)
    *  \brief Initialize the Parse client and user session
@@ -216,5 +230,5 @@ public:
  */
 extern ParseClient Parse;
 
-#endif //ARDUINO_AVR_YUN
+//#endif //ARDUINO_AVR_YUN
 #endif

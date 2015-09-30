@@ -22,6 +22,7 @@
 #ifndef ParsePush_h
 #define ParsePush_h
 
+#include "ConnectionClient.h"
 #include "ParseResponse.h"
 
 /*! \file ParsePush.h
@@ -34,7 +35,14 @@
  */
 class ParsePush : public ParseResponse {
 protected:
-	ParsePush(Process* pushClient);
+  ParsePush(ConnectionClient* pushClient);
+
+#if defined (ARDUINO_SAMD_ZERO)
+  char lookahead[5];
+  void setLookahead(const char *read_data);
+  void read();
+#endif  // defined (ARDUINO_SAMD_ZERO)
+
 public:
 
   /*! \fn void close()

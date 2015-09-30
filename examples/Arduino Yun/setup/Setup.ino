@@ -1,7 +1,7 @@
 #include <Bridge.h>
 
-String revision = "1.0.2-1_ar71xx";
-String location = "https://raw.githubusercontent.com/ParsePlatform/parse-embedded-sdks/1.0.2/yun/linux_package/";
+String revision = "1.0.3-1_ar71xx";
+String location = "https://raw.githubusercontent.com/ParsePlatform/parse-embedded-sdks/1.0.3/yun/linux_package/";
 
 void downloadPackage(String file) {
   Serial.println("Download: " + location + file + revision + ".ipk");

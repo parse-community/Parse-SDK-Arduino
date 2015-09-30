@@ -19,11 +19,15 @@
  *
  */
 
-#include "ParseClient.h"
-#include "ParseResponse.h"
-#include "ParseUtils.h"
+#if defined (ARDUINO_AVR_YUN)
+
+#include "../ParseInternal.h"
+#include "../ParseClient.h"
+#include "../ParseResponse.h"
+#include "../ParsePlatformSupport.h"
 
 ParseResponse::ParseResponse(Process* client) {
+  p = 0;
   buf = NULL;
   tmpBuf = NULL;
   bufSize = 0;
@@ -54,19 +58,8 @@ void ParseResponse::read() {
   if(buf == NULL) {
     bufSize = BUFSIZE;
     buf = new char[bufSize];
-    memset(buf, 0, bufSize);
   }
-
-  if (p == bufSize - 1) {
-    return;
-  }
-  while (p < bufSize-1 && available()) {
-    buf[p++] = client->read();
-  }
-  while(available()) {
-    client->read(); //discard exccessive data which buffer cannot contain
-  }
-  buf[bufSize-1] = 0;
+  p += ParsePlatformSupport::read(client, buf + p, bufSize - p);
 }
 
 int ParseResponse::getErrorCode() {
@@ -164,3 +157,5 @@ void ParseResponse::close() {
   }
   freeBuffer();
 }
+
+#endif

@@ -19,9 +19,9 @@
  *
  */
 
+#include "ParseInternal.h"
 #include "ParseClient.h"
 #include "ParseQuery.h"
-#include "ParseUtils.h"
 
 ParseQuery::ParseQuery() : ParseRequest() {
 	whereClause = "";
@@ -29,6 +29,11 @@ ParseQuery::ParseQuery() : ParseRequest() {
 	skip = -1;
 	order = "";
 	returnedFields = "";
+}
+
+long getDecimal(double v) {
+  long decimal = 1000 * (v - int(v));
+  return decimal > 0 ? decimal : -1 * decimal;
 }
 
 void ParseQuery::addConditionKey(const char* key) {
@@ -46,14 +51,15 @@ void ParseQuery::addConditionKey(const char* key) {
 
 void ParseQuery::addConditionNum(const char* key, const char* comparator, double v) {
 	addConditionKey(key);
+  String stringVal = String(int(v)) + "." + String(getDecimal(v));
 
 	if (comparator == "$=") {
-		whereClause += v;
+		whereClause += stringVal;
 	} else {
 		whereClause += "{\"";
 		whereClause += comparator;
 		whereClause += "\":";
-		whereClause += v;
+		whereClause += stringVal;
 		whereClause += "}";
 	}
 }

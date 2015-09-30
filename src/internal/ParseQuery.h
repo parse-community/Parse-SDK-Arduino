@@ -238,7 +238,7 @@ public:
    *
    *  \result response of the request.
    */
-  ParseResponse send() override;
+  ParseResponse send();
 };
 
 #endif

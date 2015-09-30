@@ -19,7 +19,6 @@
  *
  */
 
-#include "ParseClient.h"
 #include "ParseCloudFunction.h"
 
 ParseCloudFunction::ParseCloudFunction() : ParseObjectCreate() {

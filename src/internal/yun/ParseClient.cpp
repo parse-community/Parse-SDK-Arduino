@@ -19,10 +19,18 @@
  *
  */
 
-#include "ParseClient.h"
-#include "ParseUtils.h"
+
+#if defined (ARDUINO_AVR_YUN)
+
+#include "../ParseClient.h"
+#include "../ParseUtils.h"
+#include "../ParsePlatformSupport.h"
 
 ParseClient::ParseClient() {
+  applicationId[0] = '\0';
+  clientKey[0] = '\0';
+  installationId[0] = '\0';
+  sessionToken[0] = '\0';
 }
 
 ParseClient::~ParseClient() {
@@ -42,7 +50,7 @@ void ParseClient::begin(const char *applicationId, const char *clientKey) {
 }
 
 void ParseClient::setInstallationId(const char *installationId) {
-  this->installationId = installationId;
+  strncpy(this->installationId, installationId, sizeof(this->installationId));
   if (installationId) {
     Bridge.put("installationId", installationId);
   } else {
@@ -51,24 +59,22 @@ void ParseClient::setInstallationId(const char *installationId) {
 }
 
 const char* ParseClient::getInstallationId() {
-  if (!this->installationId) {
-    char *buf = new char[37];
-
-    requestClient.begin("parse_request");
-    requestClient.addParameter("-i");
-    requestClient.run();
-    read(&requestClient, buf, 37);
-    this->installationId = buf;
+  if (this->installationId[0] == '\0') {
+    client.begin("parse_request");
+    client.addParameter("-i");
+    client.run();
+    ParsePlatformSupport::read(&client, this->installationId, sizeof(installationId));
   }
   return this->installationId;
 }
 
 void ParseClient::setSessionToken(const char *sessionToken) {
-  if ((sessionToken != NULL) && (strlen(sessionToken) > 0 )){
-    this->sessionToken = sessionToken;
+  if ((sessionToken != NULL) && (sessionToken[0] != '\0')){
+    strncpy(this->sessionToken, sessionToken, sizeof(this->sessionToken));
     Bridge.put("sessionToken", sessionToken);
   } else {
     Bridge.put("sessionToken", "");
+    this->sessionToken[0] = '\0';
   }
 }
 
@@ -80,11 +86,11 @@ const char* ParseClient::getSessionToken() {
   if (!this->sessionToken) {
     char *buf = new char[33];
 
-    requestClient.begin("parse_request");
-    requestClient.addParameter("-s");
-    requestClient.run();
-    read(&requestClient, buf, 33);
-    this->sessionToken = buf;
+    client.begin("parse_request");
+    client.addParameter("-s");
+    client.run();
+    ParsePlatformSupport::read(&client, buf, 33);
+    strncpy(this->sessionToken, buf, sizeof(this->sessionToken));
   }
   return this->sessionToken;
 }
@@ -94,30 +100,33 @@ ParseResponse ParseClient::sendRequest(const char* httpVerb, const char* httpPat
 }
 
 ParseResponse ParseClient::sendRequest(const String& httpVerb, const String& httpPath, const String& requestBody, const String& urlParams) {
-  requestClient.begin("parse_request");  // start a process that launch the "parse_request" command
+  while(client.available()) {
+    client.read();                // flush out the buffer in case there is any leftover data there
+  }
+  client.begin("parse_request");  // start a process that launch the "parse_request" command
 
-  if( ParseUtils::isSanitizedString(httpVerb)
+  if(ParseUtils::isSanitizedString(httpVerb)
   && ParseUtils::isSanitizedString(httpPath)
   && ParseUtils::isSanitizedString(requestBody)
   && ParseUtils::isSanitizedString(urlParams)) {
-    requestClient.addParameter("-v");
-    requestClient.addParameter(httpVerb);
-    requestClient.addParameter("-e");
-    requestClient.addParameter(httpPath);
+    client.addParameter("-v");
+    client.addParameter(httpVerb);
+    client.addParameter("-e");
+    client.addParameter(httpPath);
     if (requestBody != "") {
-      requestClient.addParameter("-d");
-      requestClient.addParameter(requestBody);
+      client.addParameter("-d");
+      client.addParameter(requestBody);
     }
     if (urlParams != "") {
-      requestClient.addParameter("-p");
-      requestClient.addParameter(urlParams);
-      requestClient.runAsynchronously();
+      client.addParameter("-p");
+      client.addParameter(urlParams);
+      client.runAsynchronously();
     } else {
-      requestClient.run(); // Run the process and wait for its termination
+      client.run(); // Run the process and wait for its termination
     }
   }
 
-  ParseResponse response(&requestClient);
+  ParseResponse response(&client);
   return response;
 }
 
@@ -161,29 +170,16 @@ void ParseClient::stopPushService() {
 }
 
 void ParseClient::end() {
-  if(installationId) {
-    delete[] installationId;
-    installationId = NULL;
+  if(installationId[0] != '\0') {
+    installationId[0] = '\0';
   }
-  if(sessionToken) {
-    delete[] sessionToken;
-    sessionToken = NULL;
+  if(sessionToken[0] != '\0') {
+    sessionToken[0] = '\0';
   }
 
   stopPushService();
 }
 
-void ParseClient::read(Process* client, char* buf, int len) {
-  memset(buf, 0, len);
-  int p = 0;
-  while(1) {
-    if(client->available()) {
-      while (p < (len-1) && client->available()) {
-        buf[p++] = client->read();
-      }
-      break;
-    }
-  }
-}
-
 ParseClient Parse;
+
+#endif

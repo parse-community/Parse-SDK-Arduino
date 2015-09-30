@@ -22,6 +22,9 @@
 #ifndef ParseRequest_h
 #define ParseRequest_h
 
+#include "ParseInternal.h"
+#include "ParseResponse.h"
+
 /*! \file ParseRequest.h
  *  \brief ParseRequest object for the Yun
  *  include Parse.h, not this file
