@@ -21,10 +21,6 @@ void setup() {
     while (true);
   }
 
-  String fv = WiFi.firmwareVersion();
-  if ( fv != "18.1.1" )
-    Serial.println("Please upgrade the firmware");
-
   // attempt to connect to Wifi network:
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to SSID: ");
