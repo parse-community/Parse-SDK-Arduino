@@ -42,7 +42,7 @@ protected:
   bool isUserBuffer;
   int p;
   int resultCount;
-#if defined (ARDUINO_SAMD_ZERO)
+#if defined (ARDUINO_SAMD_ZERO) || defined(ARDUINO_ARCH_ESP8266)
   long responseLength;
   bool isChunked;
   bool firstObject;
@@ -56,7 +56,7 @@ protected:
   virtual void read();
   void readWithTimeout(int maxSec);
 
-#if defined (ARDUINO_SAMD_ZERO)
+#if defined (ARDUINO_SAMD_ZERO) || defined(ARDUINO_ARCH_ESP8266)
   // Zero functions only - do nothing on Yun
   void readLine(char *buff, int sz);
   bool readJson(char *buff, int sz);
