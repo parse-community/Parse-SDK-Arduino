@@ -50,7 +50,7 @@ private:
 
   void read(ConnectionClient* client, char* buf, int len);
 
-#if defined (ARDUINO_SAMD_ZERO)
+#if defined (ARDUINO_SAMD_ZERO) || defined(ARDUINO_ARCH_ESP8266)
   char lastPushTime[41]; // PUSH_TIME_MAX_LEN
   bool dataIsDirty;
   char pushBuff[5];
