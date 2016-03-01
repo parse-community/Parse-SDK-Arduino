@@ -49,6 +49,12 @@ void ParseClient::begin(const char *applicationId, const char *clientKey) {
   }
 }
 
+void ParseClient::setServerURL(const char *serverURL) {
+  if (serverURL) {
+    Bridge.put("serverURL", serverURL);
+  }
+}
+
 void ParseClient::setInstallationId(const char *installationId) {
   strncpy(this->installationId, installationId, sizeof(this->installationId));
   if (installationId) {

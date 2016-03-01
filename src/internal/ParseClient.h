@@ -82,6 +82,17 @@ public:
    */
   void begin(const char *applicationId, const char *clientKey);
 
+  /*! \fn void setServerURL(const char *serverURL)
+   *  \brief Set the installation object id for this client.
+   *
+   *  Set the custom server url for this client. This needs to be called
+   *  API request.
+   *
+   *  \param  serverURL     The server URL to which client should connect.
+   *
+   */
+  void setServerURL(const char *serverURL);
+
   /*! \fn void setInstallationId(const char *installationId)
    *  \brief Set the installation object id for this client.
    *
@@ -146,7 +157,7 @@ public:
    *  \brief Directly call REST API in Parse.
    *
    *  \param   httpVerb - GET/DELETE/PUT/POST
-   *  \param   httpPath - the endpoint of REST API e.g. /1/installations
+   *  \param   httpPath - the endpoint of REST API e.g. /installations
    *  \param   requestBody - http request body in json format, leave it as "" for DELTE/GET requests
    *  \param   urlParams - leave it as "" unless to perform a Parse query,
    *            use it to specify query condition e.g. where={"KEY1"":VALUE1}&limit=10&keys=KEY1,KEY2
@@ -160,7 +171,7 @@ public:
    *  \brief Directly call REST API in Parse.
    *
    *  \param   httpVerb - GET/DELETE/PUT/POST
-   *  \param   httpPath - the endpoint of REST API e.g. /1/installations
+   *  \param   httpPath - the endpoint of REST API e.g. /installations
    *  \param   requestBody - http request body in json format, leave it as "" for DELTE/GET requests
    *  \param   urlParams - leave it as "" unless to perform a Parse query,
    *            use it to specify query condition e.g. where={"KEY1"":VALUE1}&limit=10&keys=KEY1,KEY2
