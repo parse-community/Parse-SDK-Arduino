@@ -44,8 +44,10 @@ void basicObjectTest() {
   del.setClassName("Temperature");
   del.setObjectId(objectId);
   ParseResponse delResponse = del.send();
-  String expectedResp = "{}\n";
-  assert(expectedResp.equals(delResponse.getJSONBody()));
+  String expectedResp = "{}";
+  String actualResp = String(delResponse.getJSONBody());
+  actualResp.trim();
+  assert(expectedResp.equals(actualResp));
   delResponse.close();
 
   Serial.println("test passed\n");
@@ -69,6 +71,20 @@ void objectDataTypesTest() {
 
 void queryTest() {
   Serial.println("query test");
+
+  ParseObjectCreate create1;
+  create1.setClassName("Temperature");
+  create1.add("temperature", 88.0);
+  create1.add("leverDown", true);
+  ParseResponse createResponse = create1.send();
+  createResponse.close();
+
+  ParseObjectCreate create2;
+  create2.setClassName("Temperature");
+  create2.add("temperature", 88.0);
+  create2.add("leverDown", false);
+  createResponse = create2.send();
+  createResponse.close();
 
   ParseQuery query;
   query.setClassName("Temperature");
@@ -96,12 +112,13 @@ void setup() {
   Bridge.begin();
 
   // Initialize Serial
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   while (!Serial); // wait for a serial connection
 
   // Initialize Parse
   Parse.begin("", "");
+  Parse.setServerURL("https://my.server.somewhere/parse");
 }
 
 void loop() {

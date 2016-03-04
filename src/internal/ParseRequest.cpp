@@ -24,7 +24,7 @@
 
 ParseRequest::ParseRequest() {
 	requestBody = "{";
-	httpPath = "/1/";
+	httpPath = "/";
 	isBodySet = false;
 }
 
