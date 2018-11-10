@@ -1,5 +1,4 @@
-#Parse Arduino SDK
-
+# Parse Arduino SDK
 [Parse Arduino SDK](https://www.parse.com/products/iot) provide support for Arduino Yún..
 
 These SDKs let you use [Parse](https://www.parse.com/) for building Internet of Things (IoT) applications with connected devices.  Parse is a developer-friendly cloud platform that lets you get an IoT project running in minutes.   With Parse, you can:
@@ -22,26 +21,26 @@ These SDKs let you use [Parse](https://www.parse.com/) for building Internet of 
 
 * Intuitively visualize your cloud data with the [Data Browser](http://blog.parse.com/2012/12/20/the-new-data-browser-2/) on the Parse website.
 
-##Getting Started
+## Getting Started
 
 Please follow our [Parse Arduino Quickstart](https://www.parse.com/apps/quickstart#embedded/arduinoyun).  We highly recommend using Arduino Software (IDE).  See the [yun directory](/yun) for more details.
 
 
-##Documentation
+## Documentation
 
 Please see the Parse website for detailed developer guides:
 
 * [Arduino Guide](https://www.parse.com/docs/arduino_guide)
 
-##Sample App
+## Sample App
 
 We prepared a [sample app](https://github.com/ParsePlatform/Anydevice) that demonstrates how to provision connected devices using a companion phone app such that connected devices can securely access user-specific data on the Parse Cloud. This sample app also demonstrates how to send push notifications between the phone app and connected devices.
 
-##Contributing
+## Contributing
 
 See the CONTRIBUTING file for how to help out.
 
-##License
+## License
 
 Copyright (c) 2015, Parse, LLC. All rights reserved.
 
