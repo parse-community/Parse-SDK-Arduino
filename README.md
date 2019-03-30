@@ -1,4 +1,11 @@
 # Parse Arduino SDK
+
+[![Join The Conversation](https://img.shields.io/discourse/https/community.parseplatform.org/topics.svg)](https://community.parseplatform.org/c/parse-server)
+[![Backers on Open Collective](https://opencollective.com/parse-server/backers/badge.svg)](#backers)
+[![Sponsors on Open Collective](https://opencollective.com/parse-server/sponsors/badge.svg)](#sponsors)
+[![License][license-svg]][license-link]
+![Twitter Follow](https://img.shields.io/twitter/follow/ParsePlatform.svg?label=Follow%20us%20on%20Twitter&style=social)
+
 [Parse Arduino SDK](https://www.parse.com/products/iot) provide support for Arduino Yún..
 
 These SDKs let you use [Parse](https://www.parse.com/) for building Internet of Things (IoT) applications with connected devices.  Parse is a developer-friendly cloud platform that lets you get an IoT project running in minutes.   With Parse, you can:
@@ -51,5 +58,7 @@ As with any software that integrates with the Parse platform, your use of this s
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -----
-
 As of April 5, 2017, Parse, LLC has transferred this code to the parse-community organization, and will no longer be contributing to or distributing this code. 
+
+[license-svg]: https://img.shields.io/badge/license-BSD-lightgrey.svg
+[license-link]: https://github.com/parse-community/Parse-SDK-JS/blob/master/LICENSE
