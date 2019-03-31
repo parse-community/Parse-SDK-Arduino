@@ -61,4 +61,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 As of April 5, 2017, Parse, LLC has transferred this code to the parse-community organization, and will no longer be contributing to or distributing this code. 
 
 [license-svg]: https://img.shields.io/badge/license-BSD-lightgrey.svg
-[license-link]: https://github.com/parse-community/Parse-SDK-JS/blob/master/LICENSE
+[license-link]: LICENSE
