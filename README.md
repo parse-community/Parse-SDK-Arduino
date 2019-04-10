@@ -1,7 +1,4 @@
------
-## WARNING ⚠ - this project has been retired due to lack of use & contribution, if you wish to continue to use it please fork or if you wish to maintain this project make yourself known ⚠
-
------
+> ## WARNING ⚠ - this project has been retired due to lack of use & contribution, if you wish to continue to use it please fork or if you wish to maintain this project make yourself known ⚠
 
 # Parse Arduino SDK
 
