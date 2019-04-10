@@ -1,3 +1,8 @@
+-----
+## WARNING ⚠ - this project has been retired due to lack of use & contribution, if you wish to continue to use it please fork or if you wish to maintain this project make yourself known ⚠
+
+-----
+
 # Parse Arduino SDK
 
 [![Join The Conversation](https://img.shields.io/discourse/https/community.parseplatform.org/topics.svg)](https://community.parseplatform.org/c/parse-server)
