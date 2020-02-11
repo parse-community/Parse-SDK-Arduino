@@ -40,6 +40,8 @@ class ParseClient {
 private:
   char applicationId[41]; // APPLICATION_ID_MAX_LEN
   char clientKey[41]; // CLIENT_KEY_MAX_LEN
+  char serverURL[100]; // SERVER_URL_MAX_LEN
+  char hostFingerprint[100]; // HOST_FINGERPRINT_MAX_LEN
   char installationId[37]; // INSTALLATION_ID_MAX_LEN
   char sessionToken[41]; // SESSION_TOKEN_MAX_LEN
 
@@ -92,6 +94,25 @@ public:
    *
    */
   void setServerURL(const char *serverURL);
+  
+    /*! \fn void setHostFingerprint(const char *hostFingerprint)
+   *  \brief Set the host fingerprint this client.
+   *
+   *  Set the custom host fingerprint for this client. This needs to be called
+   *  API request.
+   *
+   *  \param  hostFingerprint     The host fingerprint of the serverURL.
+   *
+   */
+  void setHostFingerprint(const char *hostFingerprint);
+  
+    /*! \fn setClientInsecure()
+   *  \brief Sets the connection client to insecure
+   *
+   *  
+   *
+   */
+  void setClientInsecure();
 
   /*! \fn void setInstallationId(const char *installationId)
    *  \brief Set the installation object id for this client.

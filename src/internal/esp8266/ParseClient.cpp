@@ -81,6 +81,8 @@ static void sendAndEchoToSerial(WiFiClientSecure& client, const char *line) {
 ParseClient::ParseClient() {
   memset(applicationId, 0, sizeof(applicationId));
   memset(clientKey, 0, sizeof(clientKey));
+  memset(serverURL, 0, sizeof(serverURL));
+  memset(hostFingerprint, 0, sizeof(hostFingerprint));
   memset(installationId, 0, sizeof(installationId));
   memset(sessionToken, 0, sizeof(sessionToken));
   memset(lastPushTime, 0, sizeof(lastPushTime));
@@ -108,6 +110,29 @@ void ParseClient::begin(const char *applicationId, const char *clientKey) {
     strncpy(this->clientKey, clientKey, sizeof(this->clientKey));
   }
   restoreKeys();
+}
+
+void ParseClient::setServerURL(const char *serverURL) {
+  Serial.print("setting serverURL(");
+  Serial.print(serverURL ? serverURL : "NULL");
+  Serial.println(")");
+  if(serverURL) {
+    strncpy(this->serverURL, serverURL, sizeof(this->serverURL));
+  }
+}
+
+void ParseClient::setHostFingerprint(const char *hostFingerprint) {
+  Serial.print("setting hostFingerprint(");
+  Serial.print(hostFingerprint ? hostFingerprint : "NULL");
+  Serial.println(")");
+  if(hostFingerprint) {
+    strncpy(this->hostFingerprint, hostFingerprint, sizeof(this->hostFingerprint));
+  }
+}
+
+void ParseClient::setClientInsecure() {
+  Serial.println("setting connection client insecure");
+  client.setInsecure();
 }
 
 void ParseClient::setInstallationId(const char *installationId) {
@@ -201,8 +226,10 @@ ParseResponse ParseClient::sendRequest(const String& httpVerb, const String& htt
 
   int retry = 3;
   bool connected;
+  
+  client.setFingerprint(hostFingerprint);
 
-  while(!(connected = client.connect(PARSE_API, SSL_PORT)) && retry--) {
+  while(!(connected = client.connect(serverURL, SSL_PORT)) && retry--) {
     Serial.printf("connecting...%d\n", retry);
     yield();
   }
@@ -220,7 +247,7 @@ ParseResponse ParseClient::sendRequest(const String& httpVerb, const String& htt
         snprintf(buff, sizeof(buff) - 1, "%s %s HTTP/1.1\r\n", httpVerb.c_str(), httpPath.c_str());
     }
     sendAndEchoToSerial(client, buff);
-    snprintf(buff, sizeof(buff) - 1, "Host: %s\r\n",  PARSE_API);
+    snprintf(buff, sizeof(buff) - 1, "Host: %s\r\n",  serverURL);
     sendAndEchoToSerial(client, buff);
     snprintf(buff, sizeof(buff) - 1, "X-Parse-Client-Version: %s\r\n", CLIENT_VERSION);
     sendAndEchoToSerial(client, buff);
