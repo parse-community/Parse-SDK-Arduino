@@ -21,3 +21,6 @@ ParsePush	KEYWORD1
 #######################################
 
 begin	KEYWORD2
+setServerURL	KEYWORD2
+setHostFingerprint	KEYWORD2
+setClientInsecure	KEYWORD2
